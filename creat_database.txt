@@ -1,0 +1,45 @@
+-- 1. The Identity Layer
+CREATE TABLE firmographics (
+    company_id INT PRIMARY KEY,
+    industry_sector VARCHAR(50),
+    employee_count INT,
+    annual_revenue NUMERIC,
+    operating_budget NUMERIC,
+    years_in_operation INT,
+    hq_location VARCHAR(50)
+);
+
+-- 2. The Defensive Layer
+CREATE TABLE security_posture (
+    company_id INT PRIMARY KEY REFERENCES firmographics(company_id),
+    mfa_status INT,
+    edr_deployed INT,
+    patch_velocity INT,
+    open_vulnerabilities INT,
+    backup_type VARCHAR(50),
+    training_freq INT,
+    pen_test_age INT
+);
+
+-- 3. The Crown Jewels Layer
+CREATE TABLE data_exposure (
+    company_id INT PRIMARY KEY REFERENCES firmographics(company_id),
+    pii_count INT,
+    database_storage_tb NUMERIC,
+    pci_data_flag INT,
+    phi_data_flag INT,
+    cloud_adoption_pct NUMERIC,
+    subdomain_count INT
+);
+
+-- 4. The Ground Truth Layer (Our Target)
+CREATE TABLE incident_history (
+    company_id INT PRIMARY KEY REFERENCES firmographics(company_id),
+    incident_id VARCHAR(50),
+    breach_type VARCHAR(50),
+    total_loss_val NUMERIC,
+    records_stolen NUMERIC,
+    forensics_retained NUMERIC,
+    post_breach_pr_cost NUMERIC,
+    is_claim_filed INT
+);

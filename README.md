@@ -12,28 +12,25 @@ By accurately predicting this risk, insurance underwriters can dynamically price
 ## 🏗️ System Architecture & Data Pipeline
 
 ```mermaid
-graph TD
+graph LR
     %% Define Nodes
-    subgraph Data Engineering Phase
-    A[collecting data] -->|input 4 CSVs| B[(PostgreSQL Database)]
-    B -->|Firmographics| B1(Schema: public)
-    B -->|Security Posture| B1
-    B -->|Data Exposure| B1
-    B -->|Incident History| B1
+    subgraph Data Engineering
+    A[Collect Data] -->|Input 4 CSVs| B[(PostgreSQL)]
+    B -->|4 Relational Tables| B1(Schema: public)
     end
 
-    subgraph Data Science Phase
-    B1 -->|SQLAlchemy + JOIN Query| C[Pandas DataFrame]
-    C -->|wrangle_function| D[Data Cleaning & Preprocessing]
-    D -->|Drop Leaky & Multicollinear Features| E[Cleaned Dataset]
+    subgraph Data Science
+    B1 -->|SQLAlchemy JOIN| C[Pandas DataFrame]
+    C -->|wrangle_function| D[Clean & Preprocess]
+    D -->|Drop Leaks| E[Cleaned Dataset]
     end
 
-    subgraph Machine Learning Pipeline
-    E --> F[Train/Test/Val Split]
-    F --> G[scikit-learn Pipeline]
-    G -->|1. OrdinalEncoder| H[Categorical Encoding]
-    H -->|2. SimpleImputer| I[Handling Missing Data]
-    I -->|3. DecisionTreeClassifier| J[Risk Prediction Model]
+    subgraph Machine Learning
+    E --> F[Data Split]
+    F --> G[sklearn Pipeline]
+    G -->|1| H[OrdinalEncoder]
+    H -->|2| I[SimpleImputer]
+    I -->|3| J[DecisionTree]
     end
     
     %% Styling

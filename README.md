@@ -15,7 +15,7 @@ By accurately predicting this risk, insurance underwriters can dynamically price
 graph TD
     %% Define Nodes
     subgraph Data Engineering Phase
-    |input 4 CSVs| B[(PostgreSQL Database)]
+    collecting data -->|input 4 CSVs| B[(PostgreSQL Database)]
     B -->|Firmographics| B1(Schema: public)
     B -->|Security Posture| B1
     B -->|Data Exposure| B1

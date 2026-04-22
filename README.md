@@ -1,52 +1,45 @@
-# 🛡️ Cyber Insurance Risk Prediction Pipeline
+# 🛡️ Cyber Insurance Risk Underwriting Model
 
-## Project Overview
-This project builds an end-to-end data pipeline and machine learning model to predict the likelihood of a company filing a cyber insurance claim.
-By integrating firmographic data with technical security posture metrics, the model identifies high-risk industries and key predictors of security incidents.
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Relational_DB-blue)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Machine_Learning-orange)
 
-## 📊 Process Flow
-Below is the architectural flow of the data from the raw PostgreSQL database to the final predictive model:
+## 📌 Project Overview
+This project simulates an end-to-end Machine Learning Engineering pipeline for a Cyber Insurance provider. The objective is to predict the probability of a prospective corporate client experiencing a catastrophic cyber breach (and filing an insurance claim) based on their firmographics, security posture, and data exposure.
 
+By accurately predicting this risk, insurance underwriters can dynamically price premiums, mandate security improvements (like MFA), or deny coverage to high-risk applicants.
+
+## 🏗️ System Architecture & Data Pipeline
+
+```mermaid
 graph TD
-    subgraph "Data Layer (PostgreSQL)"
-        DB[(Cyber Insurance DB)]
-        T1[Firmographics]
-        T2[Security Posture]
-        T3[Incident History]
-        T4[Data Exposure]
+    %% Define Nodes
+    subgraph Data Engineering Phase
+    A[Python Data Generator] -->|Outputs 4 CSVs| B[(PostgreSQL Database)]
+    B -->|Firmographics| B1(Schema: public)
+    B -->|Security Posture| B1
+    B -->|Data Exposure| B1
+    B -->|Incident History| B1
     end
 
-    subgraph "ETL & Wrangling (Python/SQLAlchemy)"
-        P1[SQL JOIN via company_id]
-        P2[Handle Data Leakage]
-        P3[Multicollinearity Check]
-        P4[Feature Engineering]
+    subgraph Data Science Phase
+    B1 -->|SQLAlchemy + JOIN Query| C[Pandas DataFrame]
+    C -->|wrangle_function| D[Data Cleaning & Preprocessing]
+    D -->|Drop Leaky & Multicollinear Features| E[Cleaned Dataset]
     end
 
-    subgraph "Exploratory Data Analysis (EDA)"
-        E1[Correlation Heatmaps]
-        E2[Industry Risk Pivot Tables]
-        E3[Class Distribution Analysis]
+    subgraph Machine Learning Pipeline
+    E --> F[Train/Test/Val Split]
+    F --> G[scikit-learn Pipeline]
+    G -->|1. OrdinalEncoder| H[Categorical Encoding]
+    H -->|2. SimpleImputer| I[Handling Missing Data]
+    I -->|3. DecisionTreeClassifier| J[Risk Prediction Model]
     end
-
-    subgraph "Machine Learning Pipeline"
-        M1[Ordinal Encoding]
-        M2[Train/Val/Test Split]
-        M3[Hyperparameter Tuning]
-        M4[Decision Tree Model]
-    end
-
-    DB --> P1
-    P1 --> P2
-    P2 --> P3
-    P3 --> P4
-    P4 --> E1
-    E1 --> E2
-    E2 --> M1
-    M1 --> M2
-    M2 --> M3
-    M3 --> M4
-    M4 --> Results[Predictive Insights]
+    
+    %% Styling
+    style B fill:#336791,stroke:#fff,stroke-width:2px,color:#fff
+    style G fill:#f9a826,stroke:#fff,stroke-width:2px,color:#fff
+    style J fill:#2ca02c,stroke:#fff,stroke-width:2px,color:#fff
 
 ## 🛠️ Tech Stack
 - **Database:** PostgreSQL (Relational Data Storage)

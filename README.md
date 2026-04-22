@@ -40,7 +40,7 @@ graph TD
     style B fill:#336791,stroke:#fff,stroke-width:2px,color:#fff
     style G fill:#f9a826,stroke:#fff,stroke-width:2px,color:#fff
     style J fill:#2ca02c,stroke:#fff,stroke-width:2px,color:#fff
-
+```
 ## 🛠️ Tech Stack
 - **Database:** PostgreSQL (Relational Data Storage)
 - **Language:** Python 3.12
